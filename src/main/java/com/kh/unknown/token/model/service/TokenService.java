@@ -28,7 +28,7 @@ public class TokenService {
 		 */
 		// 리프레시 토큰은 DB에 저장
 		Map<String, String> tokens = createTokens(user);
-		saveToken(tokens.get("refreshToken"),user.getUsername());
+		saveToken(tokens.get("refreshToken"),user.getAdminNo());
 		
 		return tokens;
 	}
@@ -40,9 +40,11 @@ public class TokenService {
 	}
 	
 	// 리프레시토큰을 받아서 DB에 INSERT해주는 메소드
-	private void saveToken(String token, String memberId) {
+	private void saveToken(String token, Long adminNo) {
+		log.info("token : {} , adminNo : {} ", token, adminNo);
+		
 		RefreshToken refreshToken = RefreshToken.builder()
-										.memberId(memberId)
+										.adminNo(adminNo)
 										.token(token)
 										.expiration(System.currentTimeMillis()+ (1000*60*60*24*3))
 										.build();

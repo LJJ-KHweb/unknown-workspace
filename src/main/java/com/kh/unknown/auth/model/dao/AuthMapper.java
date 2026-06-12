@@ -10,7 +10,8 @@ public interface AuthMapper {
 
 	@Select("""
 				SELECT
-						ADMIN_ID
+						ADMIN_NO
+					 ,	ADMIN_ID
 					 ,	ADMIN_PWD
 					 ,	ADMIN_NAME
 					 ,	ROLE

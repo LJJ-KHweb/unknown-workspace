@@ -24,6 +24,7 @@ public class AdminController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResponse> signup(@RequestBody AdminDto admin) {
+		log.info("OOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		adminService.signup(admin);
 		
 		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.success("계정 생성 성공", null));

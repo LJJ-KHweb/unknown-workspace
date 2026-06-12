@@ -46,17 +46,18 @@ public class AuthService {
 		}
 		
 		//인증에 성공함
-		
-		Long adminNo = adminMapper.findByAdminNo(lrd);
-		
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		
+		log.info("==================================================Service adminNo {} ", user.getAdminNo());
+		
+		
 		//log.info("로그인한 사용자의 정보 : {}", user);
 		// 토큰 만들어서 발급 
 		
 		//Jwts.builder().subject(user.getUsername()).issuedAt(new Date()).expiration(new Date()).compact();
 		Map<String, String> tokens = tokenService.getTokens(user);
-		return LoginResponse.builder().adminNo(adminNo).adminId(user.getUsername())
-												.adminName(user.getAdminId())
+		return LoginResponse.builder().adminNo(user.getAdminNo()).adminId(user.getUsername())
+												.adminName(user.getAdminName())
 												.role(user.getAuthorities().toString())
 												.accessToken(tokens.get("accessToken"))
 												.refreshToken(tokens.get("refreshToken"))

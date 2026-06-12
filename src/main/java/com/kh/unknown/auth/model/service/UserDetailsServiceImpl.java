@@ -38,8 +38,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		
 		
-		return CustomUserDetails.builder().username(String.valueOf(user.getAdminNo()))
-											.adminId(user.getAdminId())
+		return CustomUserDetails.builder().username(username)
+											.adminNo(user.getAdminNo())
 											.password(user.getAdminPwd())
 											.adminName(user.getAdminName())
 											.authorities(Collections.singletonList(new SimpleGrantedAuthority(user.getRole())))

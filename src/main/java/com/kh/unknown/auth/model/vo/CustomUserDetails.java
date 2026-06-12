@@ -12,8 +12,8 @@ import lombok.Value;
 @Value
 @Builder
 public class CustomUserDetails implements UserDetails {
-	private String username; // ADMIN_NO 담겠음
-	private String adminId;
+	private Long adminNo;
+	private String username; // ADMIN_ID 담겠음
 	private String password;
 	private String adminName;
 	private Collection<? extends GrantedAuthority> authorities;

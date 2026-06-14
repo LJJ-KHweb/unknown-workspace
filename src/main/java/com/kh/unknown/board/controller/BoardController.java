@@ -36,16 +36,13 @@ public class BoardController {
 
 	@GetMapping
 	public ResponseEntity<List<BoardDto>> findAll(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="size") int size, @RequestParam(name="category") String category) {
-		
 		List<BoardDto> boards = boardService.findAll(new PageDto(page, size), category);
-		
 		return ResponseEntity.status(200).body(boards);
 	}
 
 	@GetMapping("/{boardNo}")
 	public ResponseEntity<BoardDto> findByBoardNo(@PathVariable(name = "boardNo") Long boardNo) {
 		BoardDto board = boardService.findByBoardNo(boardNo);
-
 		return ResponseEntity.status(200).body(board);
 	}
 
@@ -62,7 +59,6 @@ public class BoardController {
 	public ResponseEntity<ApiResponse<Void>> update(@ModelAttribute @Valid BoardDto board, @PathVariable(name = "boardNo") Long boardNo, @RequestParam(name = "file", required = false) MultipartFile file) {
 		log.info("board : {}", board);
 		log.info("boardNo : {}", boardNo);
-
 		boardService.update(board, boardNo, file);
 		//log.info("2222222222222222222222222222222222222222222{}", board);
 		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.success("게시글 수정 성공", null));

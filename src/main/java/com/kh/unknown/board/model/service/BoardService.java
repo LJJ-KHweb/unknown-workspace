@@ -81,7 +81,9 @@ public class BoardService {
 		}
 		
 		result = boardMapper.updateCategory(board.getBoardNo(), board.getBoardCategory());
-		
+		if(result < 1) {
+			throw new PostCreateException("게시글 수정 실패");
+		}
 	}
 	
 	@Transactional

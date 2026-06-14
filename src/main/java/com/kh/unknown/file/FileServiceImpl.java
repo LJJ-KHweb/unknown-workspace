@@ -30,6 +30,7 @@ public class FileServiceImpl implements FileService {
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 			return "http://localhost/uploads/" + originalFileName;
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException("이상한 파일입니다.");
 		}
 	}

@@ -39,13 +39,11 @@ public class SecurityConfig {
 				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(requests -> {
 					// PATCH방식으로 /api/members 요청이 오면 인증이 된건가?
-					requests.requestMatchers(HttpMethod.PATCH, "/api/members", "/api/boards/**").authenticated();
-					requests.requestMatchers(HttpMethod.DELETE, "/api/members","/api/boards/**").authenticated();
-					requests.requestMatchers(HttpMethod.POST, "/api/boards","/api/comments").authenticated();
-					
-					requests.requestMatchers(HttpMethod.POST, "/api/admin/**","/api/auth/login").permitAll();
-					
-					
+		
+				
+					requests.requestMatchers(HttpMethod.POST, "/api/admin/**","/api/auth/login","/api/boards").permitAll();
+					requests.requestMatchers(HttpMethod.DELETE,"/api/boards/**").permitAll();
+					requests.requestMatchers(HttpMethod.PATCH,"/api/boards/**").permitAll();
 					requests.requestMatchers(HttpMethod.GET, "/api/boards/**", "/api/comments","/uploads/**").permitAll();
 					//hasRole()메소드 우리 디비 ROLE userDetails에 Collection뭐시기에 담겨있어야 그걸 확인 할수 있음
 				}).sessionManagement(manager-> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

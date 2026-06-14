@@ -24,6 +24,10 @@ public class ApiResponse<T> {
 		return new ApiResponse<>(HttpState.STATE_201, msg, data);
 	}
 	
+	public static <T> ApiResponse<T> delete(String msg, T data) {
+		return new ApiResponse<>(HttpState.STATE_204, msg, data);
+	}
+	
 	public static <T> ApiResponse<T> notFound(String msg, T data) {
 		return new ApiResponse<>(HttpState.STATE_404, msg, data);
 	}

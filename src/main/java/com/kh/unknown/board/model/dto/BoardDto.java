@@ -26,6 +26,8 @@ public class BoardDto {
 	private String boardPwd;
 	@Size(max=30, message="너무 길어")
 	private String boardHint;
+	@NotBlank
+	private String boardCategory;
 	private String fileUrl;
 	private LocalDateTime createDate;
 	private String modified;

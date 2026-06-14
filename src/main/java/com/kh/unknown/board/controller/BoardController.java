@@ -20,6 +20,7 @@ import com.kh.unknown.api.model.dto.ApiResponse;
 import com.kh.unknown.api.model.dto.HttpState;
 import com.kh.unknown.board.model.dto.BoardDto;
 import com.kh.unknown.board.model.service.BoardService;
+import com.kh.unknown.page.model.dto.PageDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,10 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@GetMapping
-	public ResponseEntity<List<BoardDto>> findAll() {
-		List<BoardDto> boards = boardService.findAll();
-
+	public ResponseEntity<List<BoardDto>> findAll(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="size") int size, @RequestParam(name="category") String category) {
+		
+		List<BoardDto> boards = boardService.findAll(new PageDto(page, size), category);
+		
 		return ResponseEntity.status(200).body(boards);
 	}
 
@@ -48,25 +50,29 @@ public class BoardController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<Void>> save(@ModelAttribute @Valid BoardDto board,
+	public ResponseEntity<ApiResponse<Void>> save(@ModelAttribute @Valid BoardDto board, 
 			@RequestParam(name = "file", required = false) MultipartFile file) {
+		log.info("===============================================22222");
+		//log.info("파일명: [{}]", file.getOriginalFilename());
 		boardService.save(board, file);
 		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.success("게시글 작성성공", null));
 	}
 
 	@PatchMapping("/{boardNo}")
-	public ResponseEntity<ApiResponse<Void>> update(@RequestBody BoardDto board, @PathVariable(name = "boardNo") Long boardNo) {
+	public ResponseEntity<ApiResponse<Void>> update(@ModelAttribute @Valid BoardDto board, @PathVariable(name = "boardNo") Long boardNo, @RequestParam(name = "file", required = false) MultipartFile file) {
 		log.info("board : {}", board);
 		log.info("boardNo : {}", boardNo);
 
-		boardService.update(board, boardNo);
+		boardService.update(board, boardNo, file);
+		//log.info("2222222222222222222222222222222222222222222{}", board);
 		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.success("게시글 수정 성공", null));
 	}
 
 	@DeleteMapping("/{boardNo}")
-	public ResponseEntity<?> delete(@PathVariable(name = "boardNo") Long boardNo) {
-		boardService.delete(boardNo);
-		return ResponseEntity.status(204).build();
+	public ResponseEntity<ApiResponse<Void>> delete(@PathVariable(name = "boardNo") Long boardNo, @RequestBody BoardDto board) {
+		log.info("333333333333333333333333333333333333333333{}", board);
+		boardService.delete(boardNo, board);
+		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.delete("삭제성공", null));
 	}
 	
 	

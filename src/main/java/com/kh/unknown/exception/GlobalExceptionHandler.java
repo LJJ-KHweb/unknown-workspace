@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<ApiResponse> notFound(NotFoundException e) {
-		return ResponseEntity.status(HttpState.STATE_404.getCode()).body(ApiResponse.notFound("게시글 조회실패" , null));
+		return ResponseEntity.status(HttpState.STATE_404.getCode()).body(ApiResponse.notFound(e.getMessage() , null));
 	} 
 	
 	@ExceptionHandler(DeleteException.class)

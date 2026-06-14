@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -49,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		//log.info("이거 어떻게 올까? : {}", authorization);
+		// log.info("이거 어떻게 올까? : {}", authorization);
 		/*
 		 * String uri = request.getRequestURI(); if(uri.equals("/api/auth/login")) {
 		 * filterChain.doFilter(request, response); return; }
@@ -59,15 +58,16 @@ public class JwtFilter extends OncePerRequestFilter {
 		try {
 			Claims claims = jwtUtil.parseJwt(token);
 			String username = claims.getSubject();
-			CustomUserDetails user = (CustomUserDetails)userDetailService.loadUserByUsername(username);
-			//log.info("로그 {} ", user);
-			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+			CustomUserDetails user = (CustomUserDetails) userDetailService.loadUserByUsername(username);
+			// log.info("로그 {} ", user);
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
+					user.getAuthorities());
 			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			// 세부 설정 관련들 사용자의 IP주소, MAC주소, sessionId등을 포함시켜서 셋팅
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			// 이렇게 담아주면 현재 요청이 만료될 때까지 Authentication에 담겨있는 사용자의 정보를 사용할수 있음
-			
-			//log.info("이토큰의 소유주의 PK : {} ", username);
+
+			// log.info("이토큰의 소유주의 PK : {} ", username);
 		} catch (ExpiredJwtException e) {
 			log.info("토큰의 유효기간 만료");
 			response.setStatus(401);
@@ -81,7 +81,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			response.getWriter().write(String.format("유효하지 않은 토큰"));
 		}
 		filterChain.doFilter(request, response);
-		
+
 	}
 
 }

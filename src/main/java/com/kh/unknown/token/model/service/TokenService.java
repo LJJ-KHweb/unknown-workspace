@@ -51,8 +51,8 @@ public class TokenService {
 		tokenMapper.saveToken(refreshToken);
 	}
 	// 로그아웃 요청있을때 DB에있는거 싹 지워주는 메소드
-	public void logout(String memberId) {
-		tokenMapper.deleteToken(memberId);
+	public void logout(Long adminNo) {
+		tokenMapper.deleteToken(adminNo);
 	}
 	// 추후 AccessToken이 만료기간이 지나서 토큰 갱신 요청이 들어왔을때
 	// 사용자에게 전달받은 RefreshToken이 DB에 존재하면서 만료기간이 지나지 않았는지 검증하는 메소드

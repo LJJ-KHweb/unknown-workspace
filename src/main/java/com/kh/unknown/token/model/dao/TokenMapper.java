@@ -13,9 +13,9 @@ public interface TokenMapper {
 	@Insert("INSERT INTO ADMIN_TOKEN VALUES (#{adminNo}, #{token}, #{expiration})")
 	void saveToken(RefreshToken token);
 	
-	@Delete("DELETE FROM ADMIN_TOKEN WHERE MEMBER_ID = #{memberId}")
-	void deleteToken(String memberId);
+	@Delete("DELETE FROM ADMIN_TOKEN WHERE ADMIN_NO = #{adminNo}")
+	int deleteToken(Long adminNo);
 	
-	@Select("SELECT MEMBER_ID, TOKEN, EXPIRATION FROM ADMIN WHERE TOKEN = #{token}")
+	@Select("SELECT MEMBER_ID, TOKEN, EXPIRATION FROM ADMIN_TOKEN WHERE TOKEN = #{token}")
 	RefreshToken findByToken(String token);
 }

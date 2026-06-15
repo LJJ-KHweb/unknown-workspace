@@ -24,12 +24,15 @@ import com.kh.unknown.configuration.filter.JwtFilter;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
 	private final JwtFilter jwtFilter;
+
+	
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,9 +43,9 @@ public class SecurityConfig {
 				.authorizeHttpRequests(requests -> {
 					// PATCH방식으로 /api/members 요청이 오면 인증이 된건가?
 		
-				
+					requests.requestMatchers(HttpMethod.GET, "/api/admin/**", "/api/admin/boards", "/api/admin/deleteBoards/**").permitAll();
 					requests.requestMatchers(HttpMethod.POST, "/api/admin/**","/api/auth/login","/api/boards").permitAll();
-					requests.requestMatchers(HttpMethod.DELETE,"/api/boards/**").permitAll();
+					requests.requestMatchers(HttpMethod.DELETE,"/api/boards/**", "/api/admin/**").permitAll();
 					requests.requestMatchers(HttpMethod.PATCH,"/api/boards/**").permitAll();
 					requests.requestMatchers(HttpMethod.GET, "/api/boards/**", "/api/comments","/uploads/**").permitAll();
 					//hasRole()메소드 우리 디비 ROLE userDetails에 Collection뭐시기에 담겨있어야 그걸 확인 할수 있음

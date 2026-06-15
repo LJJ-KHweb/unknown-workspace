@@ -36,4 +36,8 @@ public class ApiResponse<T> {
 		return new ApiResponse<>(HttpState.STATE_400, msg, data);
 	}
 	
+	public static <T> ApiResponse<T> logoutFail(String msg, T data) {
+		return new ApiResponse<>(HttpState.STATE_400, msg, data);
+	}
+	
 }

@@ -71,6 +71,7 @@ public class BoardController {
 		return ResponseEntity.status(HttpState.STATE_201.getCode()).body(ApiResponse.delete("삭제성공", null));
 	}
 	
+
 	
 	
 	

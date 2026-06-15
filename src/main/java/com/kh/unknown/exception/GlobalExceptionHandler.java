@@ -33,4 +33,9 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpState.STATE_400.getCode()).body(ApiResponse.notFound(e.getMessage() , null));
 	} 
 	
+	@ExceptionHandler(LogoutFailException.class)
+	public ResponseEntity<ApiResponse> LogoutFail(LogoutFailException e){
+		return ResponseEntity.status(HttpState.STATE_400.getCode()).body(ApiResponse.logoutFail(e.getMessage(), null));
+	}
+	
 }
